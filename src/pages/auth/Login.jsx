@@ -22,8 +22,12 @@ export default function Login() {
     try {
       const res = await login(data).unwrap();
       dispatch(setCredentials(res));
-      console.log("Res", res);
-      navigate("/dashboard");
+
+      if (res.user.role === "super-admin") {
+        navigate("/dashboard");
+      } else {
+        navigate("/dashboardUser");
+      }
     } catch (error) {
       console.log("Erreur", error);
     }
